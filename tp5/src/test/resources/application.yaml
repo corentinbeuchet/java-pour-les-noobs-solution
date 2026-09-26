@@ -1,0 +1,8 @@
+spring:
+  liquibase:
+    change-log: classpath:db/changelog/db.changelog-test.yaml
+    contexts: test
+  jpa:
+    hibernate:
+      # Vérifie que les entités correspondent exactement au schéma créé par Liquibase
+      ddl-auto: validate

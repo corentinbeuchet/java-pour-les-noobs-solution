@@ -1,0 +1,76 @@
+databaseChangeLog:
+  - changeSet:
+      id: insert books
+      author: Super student
+      context: dev
+      changes:
+        - insert:
+            tableName: books
+            columns:
+              - column: { name: isbn, value: "9780132350884" }
+              - column: { name: author, value: "Robert C. Martin" }
+              - column: { name: title, value: "Clean Code" }
+              - column: { name: year, value: 2008 }
+        - insert:
+            tableName: books
+            columns:
+              - column: { name: isbn, value: "9780134685991" }
+              - column: { name: author, value: "Joshua Bloch" }
+              - column: { name: title, value: "Effective Java" }
+              - column: { name: year, value: 2018 }
+        - insert:
+            tableName: books
+            columns:
+              - column: { name: isbn, value: "9780201633610" }
+              - column: { name: author, value: "Erich Gamma; Richard Helm; Ralph Johnson; John Vlissides" }
+              - column: { name: title, value: "Design Patterns: Elements of Reusable Object-Oriented Software" }
+              - column: { name: year, value: 1994 }
+        - insert:
+            tableName: books
+            columns:
+              - column: { name: isbn, value: "9780321349606" }
+              - column: { name: author, value: "Brian Goetz; Tim Peierls; Joshua Bloch; Joseph Bowbeer; David Holmes; Doug Lea" }
+              - column: { name: title, value: "Java Concurrency in Practice" }
+              - column: { name: year, value: 2006 }
+        - insert:
+            tableName: books
+            columns:
+              - column: { name: isbn, value: "9780201485677" }
+              - column: { name: author, value: "Martin Fowler" }
+              - column: { name: title, value: "Refactoring: Improving the Design of Existing Code" }
+              - column: { name: year, value: 1999 }
+        - insert:
+            tableName: books
+            columns:
+              - column: { name: isbn, value: "9780134494166" }
+              - column: { name: author, value: "Robert C. Martin" }
+              - column: { name: title, value: "Clean Architecture" }
+              - column: { name: year, value: 2017 }
+        - insert:
+            tableName: books
+            columns:
+              - column: { name: isbn, value: "9780134434421" }
+              - column: { name: author, value: "Vaughn Vernon" }
+              - column: { name: title, value: "Domain-Driven Design Distilled" }
+              - column: { name: year, value: 2016 }
+        - insert:
+            tableName: books
+            columns:
+              - column: { name: isbn, value: "9780596009205" }
+              - column: { name: author, value: "Kathy Sierra; Bert Bates" }
+              - column: { name: title, value: "Head First Java" }
+              - column: { name: year, value: 2005 }
+        - insert:
+            tableName: books
+            columns:
+              - column: { name: isbn, value: "9781617294945" }
+              - column: { name: author, value: "Craig Walls" }
+              - column: { name: title, value: "Spring in Action" }
+              - column: { name: year, value: 2018 }
+        - insert:
+            tableName: books
+            columns:
+              - column: { name: isbn, value: "9780132930215" }
+              - column: { name: author, value: "Khalid Mughal; Rolf W. Rasmussen" }
+              - column: { name: title, value: "A Programmer's Guide to Java SE 8 Oracle Certified Associate (OCA)" }
+              - column: { name: year, value: 2015 }
