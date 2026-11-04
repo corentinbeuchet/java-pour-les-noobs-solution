@@ -13,12 +13,14 @@ class BookServiceTest {
 
     @Test
     void shouldReturnBooksSortedByRequestedField() {
-        Book effectiveJava = bookService.add(new Book("9780134685991", "Effective Java", "Joshua Bloch", 2018));
+        // Ordre d'ajout différent des trois ordres attendus : sans tri, chaque assertion échoue
+        Book designPatterns = bookService.add(new Book("9780201633610", "Design Patterns", "Erich Gamma", 1994));
         Book cleanCode = bookService.add(new Book("9780132350884", "Clean Code", "Robert C. Martin", 2008));
+        Book effectiveJava = bookService.add(new Book("9780134685991", "Effective Java", "Joshua Bloch", 2018));
 
-        assertEquals(List.of(cleanCode, effectiveJava), bookService.findAll(SortField.TITLE));
-        assertEquals(List.of(effectiveJava, cleanCode), bookService.findAll(SortField.AUTHOR));
-        assertEquals(List.of(cleanCode, effectiveJava), bookService.findAll(SortField.ISBN));
+        assertEquals(List.of(cleanCode, designPatterns, effectiveJava), bookService.findAll(SortField.TITLE));
+        assertEquals(List.of(designPatterns, effectiveJava, cleanCode), bookService.findAll(SortField.AUTHOR));
+        assertEquals(List.of(cleanCode, effectiveJava, designPatterns), bookService.findAll(SortField.ISBN));
     }
 
     @Test
