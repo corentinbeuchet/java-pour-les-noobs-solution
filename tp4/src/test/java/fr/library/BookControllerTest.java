@@ -13,6 +13,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.willThrow;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoInteractions;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -35,13 +36,17 @@ class BookControllerTest {
     private final Book cleanCode = new Book("9780132350884", "Clean Code", "Robert C. Martin", 2008);
 
     @Test
-    void getBooksShouldReturnBooksSortedByRequestedField() throws Exception {
+    // Le service est un mock : ce test vérifie que le controller transmet le bon tri au service
+    // et construit le JSON, pas que la liste est triée (c'est le rôle des tests de Library et de BookApiIT au TP 5).
+    void getBooksShouldPassTheRequestedSortToTheService() throws Exception {
         given(bookService.findAll(SortField.AUTHOR)).willReturn(List.of(cleanCode));
 
         mockMvc.perform(get("/books").param("sort", "author"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].isbn").value("9780132350884"))
                 .andExpect(jsonPath("$[0].title").value("Clean Code"));
+
+        verify(bookService).findAll(SortField.AUTHOR);
     }
 
     @Test
@@ -52,6 +57,14 @@ class BookControllerTest {
                 .andExpect(status().isOk());
 
         verify(bookService).findAll(SortField.TITLE);
+    }
+
+    @Test
+    void getBooksWithUnknownSortShouldReturn400() throws Exception {
+        mockMvc.perform(get("/books").param("sort", "inconnu"))
+                .andExpect(status().isBadRequest());
+
+        verifyNoInteractions(bookService);
     }
 
     @Test
@@ -90,9 +103,11 @@ class BookControllerTest {
 
     @Test
     void deleteUnknownBookShouldReturn404() throws Exception {
-        willThrow(new BookNotFoundException("Livre introuvable")).given(bookService).delete("9780000000000");
+        willThrow(new BookNotFoundException("Livre introuvable : 9780000000000"))
+                .given(bookService).delete("9780000000000");
 
         mockMvc.perform(delete("/books/9780000000000"))
-                .andExpect(status().isNotFound());
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.detail").value("Livre introuvable : 9780000000000"));
     }
 }
